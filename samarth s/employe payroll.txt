@@ -1,0 +1,77 @@
+# Employee data
+emp = {
+    "Rahul": {"hour worked": 50, "hourly wage": 200},
+    "Ram": {"hour worked": 45, "hourly wage": 600},
+    "Raj": {"hour worked": 56, "hourly wage": 300},
+    "Rohit": {"hour worked": 30, "hourly wage": 800},
+}
+
+# Function to calculate payroll
+def pay_roll(hours, wage):
+    return hours * wage
+
+# Function to update or add an employee
+def update_employee(name, hours, wage):
+    emp[name] = {"hour worked": hours, "hourly wage": wage}
+    print(f"{name} has been added/updated successfully.")
+
+# Function to calculate and display total payroll
+def total_payroll():
+    for name, details in emp.items():
+        hours = details["hour worked"]
+        wage = details["hourly wage"]
+        payroll = pay_roll(hours, wage)
+        emp[name]["payroll"] = payroll
+    for name, details in emp.items():
+        print(f"{name}: {details}")
+
+# Function to apply bonus
+def bonus_apply():
+    for name, details in emp.items():
+        hours = details["hour worked"]
+        if hours > 40:
+            bonus = 0.10 * pay_roll(hours, details["hourly wage"])  # 10% bonus
+            emp[name]["payroll"] += bonus
+            emp[name]["bonus"] = "Applied"
+        else:
+            emp[name]["bonus"] = "No Bonus"
+    for name, details in emp.items():
+        print(f"{name}: {details}")
+
+# Menu-driven interface
+print("---------------------------------------------------")
+print("Enter the choice you want:")
+print("1 for payroll calculation for specific input")
+print("2 to update or add employees")
+print("3 to calculate total payroll for all employees")
+print("4 to apply bonuses")
+print("---------------------------------------------------")
+
+try:
+    choice = int(input("Enter your choice: "))
+    print("---------------------------------------------------")
+
+    if choice == 1:
+        hours = int(input("Enter the hours worked: "))
+        wage = int(input("Enter the hourly wage: "))
+        total = pay_roll(hours, wage)
+        print(f"The payroll is: {total}")
+
+    elif choice == 2:
+        name = input("Enter the name of the employee: ")
+        hours = int(input("Enter the hours worked: "))
+        wage = int(input("Enter the hourly wage: "))
+        update_employee(name, hours, wage)
+        print(emp)
+
+    elif choice == 3:
+        total_payroll()
+
+    elif choice == 4:
+        bonus_apply()
+
+    else:
+        print("Invalid choice. Please select a valid option.")
+
+except ValueError:
+    print("Invalid input! Please enter a number.")
